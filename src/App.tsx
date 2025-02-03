@@ -18,6 +18,7 @@ import { ThxLayout } from "./thx/ThxLayout";
 import { Gap } from "@alfalab/core-components/gap";
 import { useState } from "react";
 import { StatusBadge } from "@alfalab/core-components/status-badge";
+import { sendDataToGA } from "./utils/events.ts";
 
 interface Product {
   title: string;
@@ -88,7 +89,12 @@ export const App = () => {
 
   const submit = () => {
     setLoading(true);
-    Promise.resolve().then(() => {
+    sendDataToGA({
+      plan_name:
+        selectedPlan === "Личная"
+          ? "Личная 399 Р/мес"
+          : "Семейная + 2 участника 999 Р/Мес",
+    }).then(() => {
       LS.setItem(LSKeys.ShowThx, true);
       setThx(true);
       setLoading(false);
